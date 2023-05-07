@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_begin_to_emergencia"
             app:destination="@id/emergencia" />
+        <action
+            android:id="@+id/action_begin_to_historial"
+            app:destination="@id/historial" />
     </fragment>
     <fragment
         android:id="@+id/registro"
@@ -31,4 +34,9 @@
         android:name="com.example.lab3_20192258.Emergencia"
         android:label="Ambulancias Mascotín"
         tools:layout="@layout/fragment_emergencia" />
+    <fragment
+        android:id="@+id/historial"
+        android:name="com.example.lab3_20192258.Historial"
+        android:label="Ambulancias Mascotín"
+        tools:layout="@layout/fragment_historial" />
 </navigation>

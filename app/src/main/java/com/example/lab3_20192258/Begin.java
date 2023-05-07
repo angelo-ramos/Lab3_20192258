@@ -34,6 +34,9 @@ public class Begin extends Fragment {
         binding.Emergencia.setOnClickListener( view -> {
             navController.navigate(R.id.action_begin_to_emergencia);
         });
+        binding.Historial.setOnClickListener( view -> {
+            navController.navigate(R.id.action_begin_to_historial);
+        });
 
         return binding.getRoot();
     }
