@@ -9,17 +9,19 @@
 
     <Button
         android:id="@+id/Registro"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF9800"
+        android:onClick="registro"
+        android:text="Registro"
+        android:textAllCaps="false"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.219"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FF9800"
-        android:onClick="registro"
-        android:text="Registro" />
+        app:layout_constraintVertical_bias="0.219" />
 
     <Button
         android:id="@+id/Emergencia"
@@ -29,11 +31,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Registro"
         app:layout_constraintVertical_bias="0.191"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#AE0000"
         android:onClick="emergencia"
-        android:text="Emergencia" />
+        android:text="Emergencia"
+        android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/Historial"
@@ -43,10 +46,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Emergencia"
         app:layout_constraintVertical_bias="0.313"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#59A600"
         android:onClick="historial"
-        android:text="Historial" />
+        android:text="Historial"
+        android:textAllCaps="false"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
