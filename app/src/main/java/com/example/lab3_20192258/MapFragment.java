@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -55,9 +56,13 @@ public class MapFragment extends Fragment {
 
         //Async map
         assert supportMapFragment != null;
+
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
+
+                //mMap = googleMap;
+                //direction("-12.094610833359061","-77.03776003706743");
 
                 //########################## INICIO DE MAPA EN LAS COORDENADAS DADAS COMO DATOS ##########################################
                 googleMap.addMarker(new MarkerOptions()
@@ -65,13 +70,11 @@ public class MapFragment extends Fragment {
                         .title("Clínica Mascotín"));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ORIGEN,12));
 
-                if(destinolat!=0.0 && destinolong!=0.0){
-                    LatLng destino = new LatLng(destinolat, destinolong);
-                    googleMap.addMarker(new MarkerOptions()
-                            .position(destino)
-                            .title("Marker in Sydney"));
-
-                }
+                LatLng destino = new LatLng(-12.094610833359061, -77.03776003706743);
+                googleMap.addMarker(new MarkerOptions()
+                        .position(destino)
+                        .title("Nuevo"));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destino,12));
                 //#########################################################################################################################
 
 
@@ -104,7 +107,6 @@ public class MapFragment extends Fragment {
         return view;
     }
 
-
     private void direction(String lat,String lon){
         Log.d("msg1",lat);
         String latlon=lat+", "+lon;
@@ -112,7 +114,7 @@ public class MapFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String url = Uri.parse("https://maps.googleapis.com/maps/api/directions/json")
                 .buildUpon()
-                .appendQueryParameter("destination", latlon)
+                .appendQueryParameter("destination", "-12.094610833359061, -77.03776003706743")
                 .appendQueryParameter("origin", "-12.084538, -77.031396")
                 .appendQueryParameter("mode", "driving")
                 .appendQueryParameter("key", "AIzaSyDV6J8RAPGFqjWGTP4pXp2wu4Kj9pz7jYo")

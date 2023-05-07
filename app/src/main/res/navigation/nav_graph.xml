@@ -33,10 +33,19 @@
         android:id="@+id/emergencia"
         android:name="com.example.lab3_20192258.Emergencia"
         android:label="Ambulancias Mascotín"
-        tools:layout="@layout/fragment_emergencia" />
+        tools:layout="@layout/fragment_emergencia" >
+        <action
+            android:id="@+id/action_emergencia_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
     <fragment
         android:id="@+id/historial"
         android:name="com.example.lab3_20192258.Historial"
         android:label="Ambulancias Mascotín"
         tools:layout="@layout/fragment_historial" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.lab3_20192258.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>

@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -162,6 +164,17 @@ public class Emergencia extends Fragment implements OnMapReadyCallback {
                 e.printStackTrace();
             }
 
+        });
+        //########################################################################################################################
+
+        //########################## Boton calcular ###########################################################################################
+        NavController navController = NavHostFragment.findNavController(Emergencia.this);
+        binding.buttonRuta.setOnClickListener( view -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("key","valueeeeeeeeeeeXD");
+            MapFragment mapFragment = new MapFragment();
+            mapFragment.setArguments(bundle);
+            navController.navigate(R.id.action_emergencia_to_mapFragment);
         });
         //########################################################################################################################
 
