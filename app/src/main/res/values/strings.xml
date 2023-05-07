@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Lab3_20192258</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="GenreList">
+        <item>Femenino</item>
+        <item>Masculino</item>
+    </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
