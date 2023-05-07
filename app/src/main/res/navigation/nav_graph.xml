@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/begin">
+
+    <fragment
+        android:id="@+id/begin"
+        android:name="com.example.lab3_20192258.Begin"
+        android:label="Ambulancias Mascotín"
+        tools:layout="@layout/fragment_begin" >
+        <action
+            android:id="@+id/action_begin_to_registro"
+            app:destination="@id/registro" />
+    </fragment>
+    <fragment
+        android:id="@+id/registro"
+        android:name="com.example.lab3_20192258.Registro"
+        android:label="Ambulancias Mascotín"
+        tools:layout="@layout/fragment_registro" />
+</navigation>
