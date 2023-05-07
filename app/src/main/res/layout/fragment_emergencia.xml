@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:text="Origen:"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -35,7 +35,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:text="DNI:"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="66dp"
+        android:layout_marginTop="26dp"
         android:layout_marginEnd="66dp"
         android:text="Av. Militar 2026, Lince 15046"
         android:textSize="16sp"
@@ -71,7 +71,7 @@
         android:id="@+id/DNI"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="@+id/Destino"
@@ -82,7 +82,7 @@
         android:id="@+id/Calcular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="22dp"
         android:backgroundTint="#E16464"
         android:onClick="buttonGetCoordinates"
         android:text="Calcular"
@@ -95,7 +95,7 @@
         android:id="@+id/contador"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="18dp"
         android:hint="----"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/Calcular"
@@ -106,11 +106,22 @@
         android:id="@+id/buttonRuta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:onClick="maps"
         android:text="Ver Ruta"
         app:layout_constraintEnd_toEndOf="@+id/Calcular"
         app:layout_constraintStart_toStartOf="@+id/Calcular"
         app:layout_constraintTop_toBottomOf="@+id/contador" />
+
+    <FrameLayout
+        android:id="@+id/frameMapGoogle"
+        android:layout_width="320dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="17dp"
+        app:layout_constraintEnd_toEndOf="@+id/buttonRuta"
+        app:layout_constraintStart_toStartOf="@+id/buttonRuta"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRuta">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
