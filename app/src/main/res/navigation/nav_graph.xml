@@ -21,7 +21,11 @@
         android:id="@+id/registro"
         android:name="com.example.lab3_20192258.Registro"
         android:label="Ambulancias Mascotín"
-        tools:layout="@layout/fragment_registro" />
+        tools:layout="@layout/fragment_registro" >
+        <action
+            android:id="@+id/action_registro_to_begin"
+            app:destination="@id/begin" />
+    </fragment>
     <fragment
         android:id="@+id/emergencia"
         android:name="com.example.lab3_20192258.Emergencia"
