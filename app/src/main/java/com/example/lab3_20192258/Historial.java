@@ -33,14 +33,14 @@ public class Historial extends Fragment {
                 listmodifi.remove(masc);
             }
         }
-        //MascotaEmergencia mascota1 = new MascotaEmergencia("Foster", "Masculino", "David", 74931022, "Nada","Origen:Lince-Destino:Lince");
-        //MascotaEmergencia mascota2 = new MascotaEmergencia("Luna", "Masculino", "Pablo", 74931021, "Enferma","Origen:Lince-Destino:San Isidro");
-        //MascotaEmergencia mascota3 = new MascotaEmergencia("Tamara", "Femenino", "Javier", 74931024, "Agitada","Origen:Lince-Destino:Magdalena");
-        //MascotaEmergencia mascota4 = new MascotaEmergencia("Chester", "Masculino", "Pedro", 74931025, "Cansada","Origen:Lince-Destino:Jesus Maria");
-        //listmodifi.add(mascota1);
-        //listmodifi.add(mascota2);
-        //listmodifi.add(mascota3);
-        //listmodifi.add(mascota4);
+        PetEmergency mascota1 = new PetEmergency("Foster", "Masculino", "David", 74931022, "Nada","Origen:Lince-Destino:Lince");
+        PetEmergency mascota2 = new PetEmergency("Luna", "Masculino", "Pablo", 74931021, "Enferma","Origen:Lince-Destino:San Isidro");
+        PetEmergency mascota3 = new PetEmergency("Tamara", "Femenino", "Javier", 74931024, "Agitada","Origen:Lince-Destino:Magdalena");
+        PetEmergency mascota4 = new PetEmergency("Chester", "Masculino", "Pedro", 74931025, "Cansada","Origen:Lince-Destino:Jesus Maria");
+        listmodifi.add(mascota1);
+        listmodifi.add(mascota2);
+        listmodifi.add(mascota3);
+        listmodifi.add(mascota4);
 
         if(listmodifi.size()==0) {
             TextView msjehistorial = binding.textViewMsjehistorial;

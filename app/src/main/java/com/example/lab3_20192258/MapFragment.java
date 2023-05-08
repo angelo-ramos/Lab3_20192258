@@ -1,6 +1,8 @@
 package com.example.lab3_20192258;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +29,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -38,43 +42,55 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MapFragment extends Fragment {
     private double destinolat = 0.0;
     private double destinolong = 0.0;
+    private String latDest = "";
+    private String lonDest = "";
     private final LatLng ORIGEN = new LatLng(-12.084538, -77.031396);
     private GoogleMap mMap;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Initialize view
         View view = inflater.inflate(R.layout.fragment_map,container,false);
 
-        //Initialize map fragment
-        SupportMapFragment supportMapFragment = (SupportMapFragment)
-                getChildFragmentManager().findFragmentById(R.id.google_map);
+        try {
+            latDest = getArguments().getString("latDest");
+            lonDest = getArguments().getString("lonDest");
+            destinolat = Double.parseDouble(latDest);
+            destinolong = Double.parseDouble(lonDest);
+        }catch (Exception e){
+            System.out.println("NOOOOOOOOOOOOOOOO");
+        }
 
-        //Async map
+        //Initialize and sync map fragment
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
         assert supportMapFragment != null;
 
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
 
-                //mMap = googleMap;
-                //direction("-12.094610833359061","-77.03776003706743");
+                mMap = googleMap;
+                direction(latDest,lonDest);
 
                 //########################## INICIO DE MAPA EN LAS COORDENADAS DADAS COMO DATOS ##########################################
+
+                BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(resizeBitmap(R.drawable.ambulance, 80, 80));
                 googleMap.addMarker(new MarkerOptions()
                         .position(ORIGEN)
-                        .title("Clínica Mascotín"));
+                        .title("Clínica Mascotín").icon(icon));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ORIGEN,12));
 
-                LatLng destino = new LatLng(-12.094610833359061, -77.03776003706743);
-                googleMap.addMarker(new MarkerOptions()
-                        .position(destino)
-                        .title("Nuevo"));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destino,12));
+                if(destinolat!=0.0 && destinolong!=0.0){
+                    LatLng destino = new LatLng(destinolat, destinolong);
+                    googleMap.addMarker(new MarkerOptions()
+                            .position(destino)
+                            .title("Destino"));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destino,12));
+                }
                 //#########################################################################################################################
 
 
@@ -84,11 +100,11 @@ public class MapFragment extends Fragment {
                     public void onMapClick(@NonNull LatLng latLng) {
                         //When clicked on map
                         //Initialize marker options
-                        MarkerOptions markerOptions = new MarkerOptions();
+                        //MarkerOptions markerOptions = new MarkerOptions();
                         //Set position of marker
-                        markerOptions.position(latLng);
+                        //markerOptions.position(latLng);
                         //Set title of marker
-                        markerOptions.title("Sede Ambulancias Mascotin");
+                        //markerOptions.title("Sede Ambulancias Mascotin");
                         //markerOptions.title(latLng.latitude + " : "+ latLng.longitude);
                         //Remove all marker
                         googleMap.clear();
@@ -97,7 +113,7 @@ public class MapFragment extends Fragment {
                                 latLng,10
                         ));
                         //Add marker on map
-                        googleMap.addMarker(markerOptions);
+                        //googleMap.addMarker(markerOptions);
                     }
                 });
             }
@@ -111,6 +127,7 @@ public class MapFragment extends Fragment {
         Log.d("msg1",lat);
         String latlon=lat+", "+lon;
         Context context = getContext();
+        assert context != null;
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String url = Uri.parse("https://maps.googleapis.com/maps/api/directions/json")
                 .buildUpon()
@@ -153,6 +170,7 @@ public class MapFragment extends Fragment {
                             polylineOptions.color(ContextCompat.getColor(context, R.color.purple_500));
                             polylineOptions.geodesic(true);
                         }
+                        assert polylineOptions != null;
                         mMap.addPolyline(polylineOptions);
                         mMap.addMarker(new MarkerOptions().position(new LatLng(-12.084538, -77.031396)).title("Marker 1"));
                         mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).title("Marker 1"));
@@ -161,7 +179,7 @@ public class MapFragment extends Fragment {
                                 .include(new LatLng(-12.084538,-77.031396))
                                 .include(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).build();
                         Point point = new Point();
-                        getActivity().getWindowManager().getDefaultDisplay().getSize(point);
+                        requireActivity().getWindowManager().getDefaultDisplay().getSize(point);
                         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, point.x, 150, 30));
                     }else{
                         Log.d("msg", "Hay un error");
@@ -210,5 +228,9 @@ public class MapFragment extends Fragment {
             poly.add(p);
         }
         return poly;
+    }
+    private Bitmap resizeBitmap(int resourceId, int width, int height) {
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(), resourceId);
+        return Bitmap.createScaledBitmap(imageBitmap, width, height, false);
     }
 }

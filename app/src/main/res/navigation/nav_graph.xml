@@ -46,6 +46,13 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.lab3_20192258.MapFragment"
-        android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        android:label="Ambulancias Mascotín"
+        tools:layout="@layout/fragment_map" >
+        <argument
+            android:name="lat"
+            app:argType="string" />
+        <argument
+            android:name="lon"
+            app:argType="string" />
+    </fragment>
 </navigation>

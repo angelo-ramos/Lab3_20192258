@@ -11,8 +11,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,15 +92,13 @@ public class Emergencia extends Fragment implements OnMapReadyCallback {
             TextView textView = binding.contador;
             Boolean validacion=true;
             Boolean dniEncon=false;
-            //validacion de datos
+            //validacion
 
             if(editTextDestin.getText().toString().equals("")){
                 editTextDestin.setError("Debe ingresar un destino");
                 validacion=false;
             }
-            if (!editTextDestin.getText().toString().contains("Lince") &&
-                    !editTextDestin.getText().toString().contains("San Isidro") &&
-                    !editTextDestin.getText().toString().contains("Magdalena") &&
+            if (!editTextDestin.getText().toString().contains("Lince") && !editTextDestin.getText().toString().contains("San Isidro") && !editTextDestin.getText().toString().contains("Magdalena") &&
                     !editTextDestin.getText().toString().contains("Jesus Maria")){
                 editTextDestin.setError("El destino ingresado no es valido");
                 validacion=false;
@@ -107,7 +109,7 @@ public class Emergencia extends Fragment implements OnMapReadyCallback {
                 validacion=false;
             }
 
-            //validacion de que exista el dni en el registro
+            //validacion exista DNI en registro
             ArrayList<PetEmergency> list= ListPetEmergency.getListaMastEmergencia();
 
             for (PetEmergency obj:list){
@@ -122,25 +124,24 @@ public class Emergencia extends Fragment implements OnMapReadyCallback {
             }
 
             if(dniEncon && validacion){
-                //asignacion de la ruta a la mascota
+                //Asignar ruta a mascota
                 for (PetEmergency obj:list){
                     if(editTextDni.getText().toString().equals(Integer.toString(obj.getDNI()))){
                         obj.setRuta("Origen:Lince - " +"Destino:"+editTextDestin.getText().toString());
 
                     }
                 }
-                //seteo del tiempo de viaje (contador)
                 if(editTextDestin.getText().toString().contains("Lince")){
                     minutos=10;
                 }
                 if(editTextDestin.getText().toString().contains("San Isidro")){
                     minutos=15;
                 }
-                if(editTextDestin.getText().toString().contains("Magdalena")){
-                    minutos=20;
-                }
                 if(editTextDestin.getText().toString().contains("Jesus Maria")){
                     minutos=25;
+                }
+                if(editTextDestin.getText().toString().contains("Magdalena")){
+                    minutos=20;
                 }
                 //ContadorViewModel contadorViewModel = new ViewModelProvider(this).get(ContadorViewModel.class);
                 contadorViewModel.contarNto0(minutos*60);
@@ -151,13 +152,21 @@ public class Emergencia extends Fragment implements OnMapReadyCallback {
                 addressList = geocoder.getFromLocationName(editTextDestin.getText().toString(), 1);
 
                 if (addressList != null){
-                    destinolat = addressList.get(0).getLatitude();
-                    destinolong = addressList.get(0).getLongitude();
+                    if(editTextDestin.getText().toString().contains("Magdalena")){
+                        //El geocoder no generaba resultados para Magdalena, por lo tanto puse un address genérico de dicha zona
+                        String latlon="-12.089861140123684" +","+ "-77.07007526516489";
+                        lat="-12.089861140123684";
+                        lon="-77.07007526516489";
+                        Log.d("msg",lat+lon);
+                    }else{
+                        destinolat = addressList.get(0).getLatitude();
+                        destinolong = addressList.get(0).getLongitude();
 
-                    String latlon=String.valueOf(destinolat) +","+String.valueOf(destinolong);
-                    lat=String.valueOf(destinolat);
-                    lon=String.valueOf(destinolong);
-                    Log.d("msg",lat+lon);
+                        String latlon=String.valueOf(destinolat) +","+String.valueOf(destinolong);
+                        lat=String.valueOf(destinolat);
+                        lon=String.valueOf(destinolong);
+                        Log.d("msg",lat+lon);
+                    }
                 }
 
             } catch (IOException e) {
@@ -168,13 +177,33 @@ public class Emergencia extends Fragment implements OnMapReadyCallback {
         //########################################################################################################################
 
         //########################## Boton calcular ###########################################################################################
+        System.out.println("kwkoooooooooooooooooooooooooooooooooooooooooooo: "+binding.contador.getText());
         NavController navController = NavHostFragment.findNavController(Emergencia.this);
-        binding.buttonRuta.setOnClickListener( view -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("key","valueeeeeeeeeeeXD");
-            MapFragment mapFragment = new MapFragment();
-            mapFragment.setArguments(bundle);
-            navController.navigate(R.id.action_emergencia_to_mapFragment);
+        binding.buttonRuta.setEnabled(false);
+        binding.contador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().equals("----")) {
+                    //binding.buttonRuta.setEnabled(false);
+                } else {
+                    binding.buttonRuta.setEnabled(true);
+                    binding.buttonRuta.setOnClickListener( view -> {
+                        //NavDirections action = EmergenciaDirections.actionEmergenciaToMapFragment("-12.068227574508274","-77.08039658333334");
+                        //Navigation.findNavController(view).navigate(action);
+                        Bundle args = new Bundle();
+                        args.putString("latDest", lat);
+                        args.putString("lonDest", lon);
+                        navController.navigate(R.id.action_emergencia_to_mapFragment,args);
+                    });
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
         });
         //########################################################################################################################
 
