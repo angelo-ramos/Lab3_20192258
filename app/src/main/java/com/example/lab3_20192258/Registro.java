@@ -74,13 +74,13 @@ public class Registro extends Fragment {
             EditText descrip=binding.editTextDesc;
             String textDesc="";
             if(descrip.getText().toString().equals("")){
-                descrip.setError("Debe ingresar un nombre de Dueño");
+                descrip.setError("Debe ingresar una descripcion");
             }else{
                 textDesc=descrip.getText().toString();
             }
 
             //Añadir a la lista
-            if(fine) {
+            if(fine && !textStringNomMasc.equals("") && !textnomDue.equals("") && !textDesc.equals("")) {
                 PetEmergency mascotaEmer = new PetEmergency(textStringNomMasc, textGenero, textnomDue, dniint, textDesc,"");
                 ListPetEmergency.addMascotaEmergencia(mascotaEmer);
                 Toast.makeText(context, "Se guardo con éxito", Toast.LENGTH_SHORT).show();
