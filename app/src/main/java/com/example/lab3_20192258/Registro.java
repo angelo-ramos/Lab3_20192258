@@ -43,13 +43,23 @@ public class Registro extends Fragment {
             boolean fine = true;
 
             EditText nomMasco = binding.editTextNomMascota;
-            String textStringNomMasc=nomMasco.getText().toString();
+            String textStringNomMasc="";
+            if(nomMasco.getText().toString().equals("")){
+                nomMasco.setError("Debe ingresar un nombre de mascota");
+            }else{
+                textStringNomMasc=nomMasco.getText().toString();
+            }
 
             Spinner spinnerGenero=binding.spinnerGenero;
             String textGenero=spinnerGenero.getSelectedItem().toString();
 
             EditText nomDue=binding.editTextNomDue;
-            String textnomDue=nomDue.getText().toString();
+            String textnomDue = "";
+            if(nomDue.getText().toString().equals("")){
+                nomDue.setError("Debe ingresar un nombre de Dueño");
+            }else{
+                textnomDue=nomDue.getText().toString();
+            }
 
             EditText editTextDni = binding.editTextDni;
             String dnitext = editTextDni.getText().toString();
@@ -62,7 +72,12 @@ public class Registro extends Fragment {
             }
 
             EditText descrip=binding.editTextDesc;
-            String textDesc=descrip.getText().toString();
+            String textDesc="";
+            if(descrip.getText().toString().equals("")){
+                descrip.setError("Debe ingresar un nombre de Dueño");
+            }else{
+                textDesc=descrip.getText().toString();
+            }
 
             //Añadir a la lista
             if(fine) {
